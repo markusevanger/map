@@ -2,4 +2,4 @@
 
 
 # Work in progress country guessing game 
-!! 
+Started on in may 2024 as my first entry to TypeScript, Tailwind but i never finished it. Currently working on finnishing this for 2025. 
