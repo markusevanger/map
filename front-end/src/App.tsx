@@ -1,12 +1,11 @@
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import mapdata from "./resources/mapdata"
-import {CountryInput} from "./components/countryInput"
-import {ArrowDown} from "lucide-react"
+import { CountryInput } from "./components/countryInput"
 import Map from "./components/map"
-import {Button} from "@/components/ui/button.tsx";
-import Leaderboard, {User} from "@/components/Leaderboard.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import Leaderboard, { User } from "@/components/Leaderboard.tsx";
 import SharingMenu from "@/components/SharingMenu.tsx";
-import {apiUrl} from "../values.ts";
+import { apiUrl } from "../values.ts";
 import ToggleDarkModeButton from "@/components/ToggleDarkModeButton.tsx";
 
 
@@ -22,18 +21,15 @@ function App() {
     const [userName, setUserName] = useState("");
     const [countries, setCountries] = useState<Country[]>([])
     const [randomCountry, setRandomCountry] = useState<Country>()
-    const [showSharingMenu, setShowSharingMenu] = useState<boolean>(false)
+    const [showSharingMenu, setShowSharingMenu] = useState<boolean>(true)
     const [startTime, setStartTime] = useState<Date>()
     const [endTime, setEndTime] = useState<Date>()
     const myRef = useRef(null)
-    const [sharingMenuState, setSharingMenuState] = useState<"result" | "chooseLoginOrRegister" | "newUser" | "signIn">("result")
-
 
     // Load in users and userName
     useEffect(() => {
 
         setUserName(localStorage.getItem("user") || "");
-
         async function getUsers() {
             try {
                 const response = await fetch(apiUrl + "/users/");
@@ -137,7 +133,6 @@ function App() {
 
 
     }
-    const getSolvedAmountOfCountries = () => countries.filter((country => country.isSolved)).length
 
 
     return (
@@ -149,16 +144,12 @@ function App() {
                     setShowSharingMenu={setShowSharingMenu}
                     time={getStartEndTimeDifferenceFormatted()}
                     users={users}
-                    sharingMenuState={sharingMenuState}
-                    setSharingMenuState={newState => {
-                        setSharingMenuState(newState)
-                    }}
-                    setUserProfile={(newUserName) => setUserName(newUserName)}
+                    setUserProfile={(newUserName) => setUserName(newUserName.name)}
                     userProfile={userName}>
                 </SharingMenu>
 
 
-                <div className={"z-0"}>
+                <div className={""}>
                     <section>
                         {
                             randomCountry && (
@@ -169,24 +160,12 @@ function App() {
                                 >
 
                                     <div
-                                        className="w-full absolute bottom-40 left-0 flex items-center flex-col font-mono gap-1">
+                                        className="w-full flex items-center justify-center">
                                         <CountryInput
                                             countries={countries}
                                             randomCountry={randomCountry}
                                             nextRandomCountry={nextRandomCountry}>
                                         </CountryInput>
-
-                                        <p>
-                                            {
-                                                getSolvedAmountOfCountries() == 0 ?
-                                                    "Not started" :
-                                                    `${getSolvedAmountOfCountries()} / ${countries.length}`
-                                            }
-                                        </p>
-
-                                        <Button onClick={() => myRef.current.scrollIntoView()}>See
-                                            Leaderboard <ArrowDown></ArrowDown></Button>
-
                                     </div>
                                 </Map>
                             )
@@ -197,9 +176,8 @@ function App() {
                         <div ref={myRef} className={"w-100 flex flex-col p-10 gap-5"}>
 
                             <Leaderboard users={users} userName={userName}
-                                         setUserName={(newUserName: string) => setUserName(newUserName)}></Leaderboard>
+                                setUserName={(newUserName: string) => setUserName(newUserName)}></Leaderboard>
                             <div className={"flex gap-5"}>
-                                <Button onClick={handleShowResult}>Show result debug</Button>
                                 <ToggleDarkModeButton></ToggleDarkModeButton>
                             </div>
                         </div>

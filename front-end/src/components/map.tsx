@@ -1,4 +1,4 @@
-import {ComposableMap, Geographies, Geography, ZoomableGroup} from "react-simple-maps";
+import {ComposableMap, Geographies, Geography} from "react-simple-maps";
 import mapdata from "../resources/mapdata"
 import {Country} from "../App"
 
@@ -27,10 +27,7 @@ export default function Map(props: {
             height={mapHeight}
 
         >
-            <ZoomableGroup
-                maxZoom={1}
 
-            >
                 <Geographies geography={mapdata.data}>
                     {({geographies}) => {
 
@@ -68,7 +65,6 @@ export default function Map(props: {
 
 
                 </Geographies>
-            </ZoomableGroup>
         </ComposableMap>
         {children}
     </>

@@ -53,11 +53,11 @@ export default function Leaderboard(props: { users: User[], userName:string, set
                     <div className={"w-full flex justify-between"}>
                         Leaderboard
                         <DropdownMenu>
-                            <DropdownMenuTrigger> <Button variant={"outline"}> <User/> {userName || "Log in"}</Button>
+                            <DropdownMenuTrigger> <Button variant={"outline"}> <User/> {userName || ""}</Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuItem
-                                    onClick={handleLogInOrOut}> {userName ? "Log out" : "Log in"} </DropdownMenuItem>
+                                    onClick={handleLogInOrOut}> Log out</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
@@ -99,7 +99,6 @@ export interface UserProfile {
 export interface User {
     _id: string;
     name: string;
-    pin: string
     entries: Entry[]; // Array of entries for each user
 }
 
